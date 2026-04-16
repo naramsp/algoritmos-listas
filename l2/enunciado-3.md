@@ -5,8 +5,8 @@ A cada ciclo, o sistema executa a tarefa de maior prioridade disponível. Se dua
 
 O sistema recebe eventos em ordem cronológica. Cada evento é um dos seguintes:
 
-ADD id prioridade tempo — adiciona uma tarefa à fila.
-RUN — executa a próxima tarefa segundo as regras acima e imprime seu id. Se não houver tarefas, imprime IDLE.
+ADD id prioridade tempo — adiciona uma tarefa à fila.  
+RUN — executa a próxima tarefa segundo as regras acima e imprime seu id. Se não houver tarefas, imprime IDLE.  
 BOOST k — aumenta em k a prioridade de todas as tarefas atualmente na fila (mas não da que está em execução, pois nenhuma está).
 
 Dado a sequência de eventos, simule o escalonador.
