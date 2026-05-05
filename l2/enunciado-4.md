@@ -1,13 +1,13 @@
 # Invetário de Laboratório
 Um laboratório recebe e consome reagentes químicos diariamente. Cada reagente é identificado por um nome (string). O sistema precisa responder eficientemente a três tipos de operações:
 
-ENTRADA nome quantidade — adiciona quantidade unidades do reagente ao estoque.
-CONSUMO nome quantidade — remove quantidade unidades do estoque. Se o estoque do reagente ficar com zero ou menos, ele é removido completamente do inventário.
-CONSULTA nome — imprime a quantidade atual do reagente, ou AUSENTE se ele não existir.
-CRITICOS k — imprime em ordem crescente de quantidade os nomes de todos os reagentes cujo estoque é menor ou igual a k. Se dois reagentes tiverem a mesma quantidade, ordene pelos nomes em ordem lexicográfica. Se não houver nenhum, imprima NENHUM.
+ENTRADA nome quantidade — adiciona quantidade unidades do reagente ao estoque.  
+CONSUMO nome quantidade — remove quantidade unidades do estoque. Se o estoque do reagente ficar com zero ou menos, ele é removido completamente do inventário.  
+CONSULTA nome — imprime a quantidade atual do reagente, ou AUSENTE se ele não existir.  
+CRITICOS k — imprime em ordem crescente de quantidade os nomes de todos os reagentes cujo estoque é menor ou igual a k. Se dois reagentes tiverem a mesma quantidade, ordene pelos nomes em ordem lexicográfica. Se não houver nenhum, imprima NENHUM.  
 
 ## Input Specification
-A primeira linha contém N (1 ≤ N ≤ 200.000), o número de operações.
+A primeira linha contém N (1 ≤ N ≤ 200.000), o número de operações.  
 Cada uma das N linhas seguintes contém uma operação. Quantidades são inteiros positivos (1 ≤ quantidade ≤ 10⁶). Nomes têm até 30 caracteres (apenas letras e dígitos).
 
 ## Output Specification

@@ -1,58 +1,56 @@
 #include <iostream>
-#include <vector>
-using namespace std; 
+using namespace std;
 int banco;
 
-void heapfy(vector<int> & heap, int sz){	
-	for(int i=sz; i>-1;  i--){
-		if ((i<<1)+2<sz+1) {
-				if (heap[i]<heap[(i<<1)+2] || heap[i]<heap[(i<<1)+1]) {
-					if (heap[(i<<1)+1]>heap[(i<<1)+2]) {
-						banco = heap[(i<<1)+1];
-						heap[(i<<1)+1] = heap[i];
-					} else {
-						banco = heap[(i<<1)+2];
-						heap[(i<<1)+2] = heap[i];
-					};
-					heap[i] = banco;
-				};
-			} else if ((i<<1)+1<sz+1){
-				if (heap[i] < heap[(i<<1)+1]){
-					banco = heap[(i<<1)+1];
-					heap[(i<<1)+1] = heap[i];
-					heap[i] = banco;
-				};
-			};
-	}
-	// nao dá pra cancelar os +2 com +1 pq o indice base é zero, nao um
+void quick (int sort[], int inicio, int fim){
+    int pivo = sort[inicio];
+
+    int esq = inicio+1;
+    int dir = fim;
+   
+    if (esq > dir) return;
+
+    while(1){
+        while (sort[esq] < pivo && esq < dir) { esq++;};
+        while (sort[dir] >= pivo && dir >= esq) {dir--;};
+
+        if (esq >= dir) break; // cruzaram
+
+        else{
+            banco = sort[esq];
+            sort[esq] = sort[dir];
+            sort[dir] = banco;
+        };
+
+    }
+
+
+     // breakou:
+     // sim eu reusei o codigo. meio q o problema Ã© o mesmo
+    banco = sort[dir];
+    sort[dir] = sort[inicio];
+    sort[inicio] = banco;
+
+    quick(sort, inicio, dir-1); // particao da esquerda
+    // dir Ã© a posiÃ§ao do pivo
+    quick(sort, dir+1, fim); // particao da direita
 }
 
 int main(){
-	// com TL em 5 segundos e vetor maximo 10^6, em teeese isso passa ate com O(n) = n²
-	// em teeeeeeese
-	// ent da pra fazer sla insert sort
-	
-	
-	/* contra-argumento: heap sort é mais legal.*/
-	
-	vector<int> sort;
-	int in, n; cin >> in;
-	
+	// WRONG ANSERW OQ
+
+	int in;
+    cin >> in;
+
+	int sort[in];
+
 	for (int c =0; c<in; c++){
-		cin >> n;
-		sort.push_back(n);
+        cin >> sort[c];
 	}
 	
-	while(in--){
-		heapfy(sort, in);
-		cout << sort[0] << endl;
-		banco = sort[in];
-		sort[in] = sort[0];
-		sort[0] = banco;
-	}
+	quick(sort, 0, in);
 
-	// FUNCIONA, mas o array fica ao contrario
-
-	
+	for(int i=0; i<in; i++) cout << sort[i] << endl;
+    // OQ É PRESENTATION ERROR
 	return 0;
 }
