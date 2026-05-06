@@ -1,3 +1,5 @@
+// ok, passou nos testes 
+
 # include <iostream>
 # include <vector>
 
@@ -20,6 +22,9 @@ void BFS(int no){
             for (int i = 0; i < AdjList[no].size(); i++) // pra cada outro nó adjascente ao atual
                 if (!visitou[AdjList[no][i]]){
                     visitou[AdjList[no][i]] = true;
+
+                    distancias[AdjList[no][i]] = distancias[no] +1;
+
                     queueimprov.push_back(AdjList[no][i]);
                 };
 
@@ -33,11 +38,12 @@ void BFS(int no){
 }
 
 int main(){
-    int n, m, atual = 1;
+    int n, m, atual = 1, MaxX =-1, MaxY = -1, MaxDist = -1;
     char in; // 'in' stands for 'input'
     std::cin >> n >> m;
     visitou.assign((n*m)+1, false);
     AdjList.assign((n*m)+1, std::vector<int>{});
+    distancias.assign((n*m)+1, -1);
     // vou usar o 0 como source falso, pra fazer o multisource
 
     std::vector<char> dummy; dummy.assign(m, ' ');
@@ -67,5 +73,19 @@ int main(){
 
     BFS(0);
 
+
+    for (int i=1; i<distancias.size(); i++){
+        std::cout << distancias[i] << ' ';
+        if (distancias[i] > MaxDist){
+            MaxDist = distancias[i];
+            MaxY = (i%m);
+            MaxX = (i/m)+1;
+        }
+
+        if (!(i%m)) std::cout << std::endl;
+    }
+    
+
+    std::cout << MaxX << ' ' << MaxY << ' ' << MaxDist;
     return 0;
 };
