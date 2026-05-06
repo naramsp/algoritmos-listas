@@ -22,29 +22,29 @@ void RemNo(no * head){
 };
 
 
-void BFS(int no, bool v[], int d[], no list[]){
-    v[no] = true;
-    AdcNo(fila, no);
+void BFS(int node, bool v[], int d[], no list[]){
+    v[node] = true;
+    AdcNo(fila, node);
+    no * cur; // cur stands for cursor, not current
+    // passeia pela lista de adjascencia
 
-    while (fila->next != nullptr){ // enqnt tiver no
-        no * cur = list->next;
-        /*
-           A LOGICA TA ERRADA:
-           é pra ter a lista de adjascencia aqui
-
+    while (true){ // enqnt tiver no
+        cur = list[node].next; 
+        
         while (cur != nullptr){ 
             if (!v[cur->val]){
                 v[cur->val] = true;
                 
-                d[cur->val] = d[no] +1;
+                d[cur->val] = d[node] +1;
                 AdcNo(fila, cur->val);
             };
             cur = cur->next;
-            RemNo(fila);
-        }
-        */
-
-    };
+        };
+    
+        if (fila->next == nullptr) break; // segfault aqui
+        node = fila->next->val;
+        RemNo(fila);
+    }
 
 };
 
@@ -87,5 +87,20 @@ int main(){
         }
         atual++; // da pra calcular atual iterativamente mas ai ia ficar ainda mais dificil de ler
     }
+    
+    BFS(0, visitou, distancias, AdjList);
+    
+    for (int i=1; i<(n*m)+1; i++){
+        std::cout << distancias[i];
+        if (distancias[i] > MaxDist){
+            MaxDist = distancias[i];
+            MaxX = i%m;
+            MaxY = (i/m)+1;
+        };
+        
+        if (!(i%m)) std::cout << std::endl;
+        else std::cout << ' ';
+    }
+    
     return 0;
 }
