@@ -1,3 +1,4 @@
+// sla sinto q vai dar TLE
 # include <iostream>
 
 struct no{
@@ -16,7 +17,7 @@ void AdcNo(no * head, int v){
 };
 
 void RemNo(no * head){
-    no * die = head; // die means the in deutsch
+    no * die = head->next; // die means the in deutsch
     head->next = die->next;
     delete die;
 };
@@ -28,7 +29,8 @@ void BFS(int node, bool v[], int d[], no list[]){
     no * cur; // cur stands for cursor, not current
     // passeia pela lista de adjascencia
 
-    while (true){ // enqnt tiver no
+    while (fila->next != nullptr){ // enqnt tiver no
+        node = fila->next->val;
         cur = list[node].next; 
         
         while (cur != nullptr){ 
@@ -40,9 +42,6 @@ void BFS(int node, bool v[], int d[], no list[]){
             };
             cur = cur->next;
         };
-    
-        if (fila->next == nullptr) break; // segfault aqui
-        node = fila->next->val;
         RemNo(fila);
     }
 
@@ -94,13 +93,15 @@ int main(){
         std::cout << distancias[i];
         if (distancias[i] > MaxDist){
             MaxDist = distancias[i];
-            MaxX = i%m;
-            MaxY = (i/m)+1;
+            MaxX = (i/m)+1; // TODO: reorganizar as caixas
+            MaxY = (i%m); // TODO: reorganizar as colunas
         };
         
         if (!(i%m)) std::cout << std::endl;
         else std::cout << ' ';
     }
+
+    std::cout << MaxX << ' ' << MaxY << ' ' << MaxDist << std::endl;
     
     return 0;
 }
