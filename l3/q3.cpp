@@ -51,6 +51,7 @@ void DFS(int node, bool v[]){
 
 int main(){
     int n, in, in2;
+    std::cin >> n;
     int * temp = new int [n];
     bool * visitou = new bool [n];
 
@@ -60,7 +61,7 @@ int main(){
         std::cin>>in;
         temp[i] = in;
 
-        int AdjList[i][3]; // nao tenho ideia se essa sintaxe funcionakk
+        int AdjList[i][3] = {-1, -1, -1}; // sera q da pra inicializar sem colocar valor?
     };
 
     for (int i=0; i<n; i++){
