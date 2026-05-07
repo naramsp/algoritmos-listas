@@ -1,4 +1,5 @@
-// sla sinto q vai dar TLE
+// WA:  o problema provavelmente esta nas coordewnadas da celula com maior distancia
+
 # include <iostream>
 
 struct no{
