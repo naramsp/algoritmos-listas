@@ -1,4 +1,4 @@
-// WA:  o problema provavelmente esta nas coordewnadas da celula com maior distancia
+// SUBMETEUUUUUUUUUUU
 
 # include <iostream>
 
@@ -68,11 +68,13 @@ int main(){
 
     
     char ** InputMtrx = new char * [n];
-    for (int i = 0; i<m; i++) InputMtrx[i] = new char [m];
+    for (int i = 0; i<n; i++) InputMtrx[i] = new char [m];
 
     for (int i=1; i<n+1; i++) for (int j=1; j<m+1; j++){
         std::cin >> in;
         InputMtrx[i-1][j-1] = in;
+
+
 
         if (in != '#'){
             if (in == 'P') AdcNo(&(AdjList[0]), atual);
@@ -94,11 +96,19 @@ int main(){
         std::cout << distancias[i];
         if (distancias[i] > MaxDist){
             MaxDist = distancias[i];
-            MaxX = (i/m)+1; // TODO: reorganizar as caixas
-            MaxY = (i%m); // TODO: reorganizar as colunas
+            if (i && i%m){
+                MaxX = (i/m)+1;
+                MaxY = (i%m);
+            } else{
+                MaxX = i/m;
+                MaxY = m; // achei oq ta dando errado..?
+                // espero ne
+            };
+
+            
         };
         
-        if (!(i%m)) std::cout << std::endl;
+        if (!((i%m))) std::cout << std::endl;
         else std::cout << ' ';
     }
 

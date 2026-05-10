@@ -1,9 +1,7 @@
 // a formatação dessa questao ta tao chatgpt que chega ta dificil de ler
-// n é bom usar ia pra criar questao nao vei aprendam.
+
 # include <iostream>
 
-
-// vou submeter, seja oq Deus quiser
 long long pow (int base, int exp){
     long long r = base;
     while(exp-- > 1)r *= base;
@@ -44,7 +42,7 @@ void TakeNo(no * head){
     delete die; 
 };
 
-void DFS(int node, bool v[], no * list[], int p[], long long s[], long long tam){
+void DFS(int node, bool v[], no * list[], long long s[], long long tam){
     no * stack = new no;
     no * cur;
     PushNo(stack, node); 
@@ -55,6 +53,8 @@ void DFS(int node, bool v[], no * list[], int p[], long long s[], long long tam)
         TakeNo(stack);
         if (!v[node]){
             v[node] = true;
+        
+            // == cojo geralmente viria aq mas dessa vez nao pq precisa das arestas ==
 
             // == empurrando vizinhos ==
             cur = list[node]->prox; // lembrar q heads sao sempre nao-usaveis
@@ -65,7 +65,7 @@ void DFS(int node, bool v[], no * list[], int p[], long long s[], long long tam)
                     // cojo q nao é de DFS
                     for (int i=0; i<tam; i++){
                         if ((1<<node & i) && (1<<cur->indice & i)){
-                            s[i] = -999;
+                            s[i] = 0;
                         };
                     };
                 };
@@ -95,7 +95,7 @@ int main(){
         AdjList[i] = new no;
     };
 
-    for (int i=0; i<n-1; i++){
+    for (long long i=0; i<n-1; i++){
         std::cin >> in >> in2;
         in--; in2--;
         PushNo(AdjList[in], in2);
@@ -105,20 +105,39 @@ int main(){
     // hihi, e se eu fizer os calculos Antes de considerar o grafo?
     long long bitmask = pow(2, n);
     long long somas [bitmask];
-    for (int i=0; i< bitmask; i++) somas[i] = 0;
+    somas[0] = 0;
 
     long long shf;
     int it;
 
+    // ok programaçao dinamica it is
     for (long long i=1; i<bitmask; i++){
         shf = 1; it = 0;
-        while (shf <= i){
-            if (shf & i){
-                somas[i] += JeffPesos[it];
-            };
+
+                // a soma 0011 vai ser calculada antes da soma 1011
+                // entao a soma 1011 pode ser considerada como a soma 0011 + 1000, ent... 
+                // 1011 = 011 + 1000, ou
+                //   11 = 3   + 8
+                // ent é pegar o maior quadrado de um indice e tirar ele pra saber de onde a programaçao dinamica vai iniciar
+                // importante frizar que, na conta acima, 11 e 3 seriam usados como índices de soma,
+                // pq seus valores ja foram calculados,
+                // mas 8 seria usado como bitmask, ou seja, representaria apenas o quarto nó sendo adicionado,
+                // no lugar do número 8 em si.
+                // ent por isso no codigo representei ele como um iterador, e nao como si mesmo
+
+
+        while (shf < i){
             shf <<= 1;
             it++;
+        };
+        if (shf > i){
+            shf >>= 1;
+            somas[i] = somas[i - shf] + JeffPesos[--it]; // se for maior ent o iterador subiui 1 degrau a mais q nao era necessario
+        } else { // i é quadrado perfeito
+            somas[i] = JeffPesos[it];
         }
+        
+        // fazendo assim pq to tentando otimizar a qnt de chamadas por loop
     }
 
     /*
@@ -129,10 +148,10 @@ int main(){
     se der TLE, dou um jeito de usar as contas ja feitas pra fazer uma conta futura
     */
 
-    DFS(0, visitou, AdjList, JeffPesos, somas, bitmask);
+    DFS(0, visitou, AdjList, somas, bitmask);
 
     long long max = 0;
-    for (int i=0; i<bitmask; i++){
+    for (long long i=0; i<bitmask; i++){
         if (somas[i] > max) max = somas[i];
     };
     std::cout<<max<<std::endl;
